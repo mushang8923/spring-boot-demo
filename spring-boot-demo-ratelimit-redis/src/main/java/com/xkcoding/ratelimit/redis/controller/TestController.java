@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
 /**
  * <p>
  * 测试
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @RateLimiter(value = 5)
+    @RateLimiter(value = 1500,timeUnit = TimeUnit.SECONDS)
     @GetMapping("/test1")
     public Dict test1() {
         log.info("【test1】被执行了。。。。。");
@@ -37,4 +40,8 @@ public class TestController {
         log.info("【test3】被执行了。。。。。");
         return Dict.create().set("msg", "hello,world!").set("description", "别想一直看到我，不信你快速刷新看看~");
     }
+
+  public static void main(String[] args) {
+    System.out.println(Instant.now().toEpochMilli());
+  }
 }
